@@ -11,7 +11,11 @@ const IngredientList = ({ingredients}) => {
     )
   })
 
-  return <div>{ingredientElements}</div>;
+  return (
+    <div className="ingredient-grid">
+      {ingredientElements}
+    </div>
+  )
 }
 
 export default IngredientList
