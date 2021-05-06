@@ -8,8 +8,10 @@ export const RecipeContext = React.createContext();
 const LOCAL_STORAGE_KEY = 'recipeBookApp.recipes'
 
 function App() {
+  const [seletedRecipeId, setSeletedRecipeId] = useState();
   const [recipes, setRecipes] = useState(sampleRecipes);
-  
+  const selectedRecipe = recipes.find(recipe=>recipe.id===seletedRecipeId);
+
   useEffect(() => {
     const recipeJSON = localStorage.getItem(LOCAL_STORAGE_KEY);
     if (recipeJSON != null) setRecipes(JSON.parse(recipeJSON));
@@ -22,7 +24,12 @@ function App() {
   const recipeContextValue = {
     handleRecipeAdd,
     handleRecipeDelete,
+    handleRecipeSelect,
   };
+
+  function handleRecipeSelect(id){
+    setSeletedRecipeId(id)
+  }
   
   function handleRecipeAdd() {
     const newRecipe = {
@@ -46,7 +53,7 @@ function App() {
       <RecipeList
         recipes={recipes}
       />
-      <RecipeEdit />
+      {selectedRecipe && <RecipeEdit recipe={selectedRecipe} />}
     </RecipeContext.Provider>
   );
 }
