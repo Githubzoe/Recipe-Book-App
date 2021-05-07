@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import RecipeIngredientEdit from './RecipeIngredientEdit';
 import { RecipeContext } from './App';
+import { v4 as uuidv4 } from "uuid";
 
 const RecipeEdit = ({recipe}) => {
   const { handleRecipeChange, handleRecipeSelect } = useContext(RecipeContext);
@@ -16,10 +17,24 @@ const RecipeEdit = ({recipe}) => {
         handleChange({ ingredients: newIngredients })
   }
 
+    function handleIngredientAdd(id, ingredient) {
+      const newIngredient = {
+        id: uuidv4(),
+        name: "",
+        amount: ""
+      }
+      handleChange({ ingredients: [...recipe.ingredients, newIngredient] });
+    }
+
   return (
     <div className="recipe-edit">
       <div className="recipe-edit__remove-button-container">
-        <button className="btn recipe-edit__remove-button" onClick={()=>handleRecipeSelect(undefined)}>&times;</button>
+        <button
+          className="btn recipe-edit__remove-button"
+          onClick={() => handleRecipeSelect(undefined)}
+        >
+          &times;
+        </button>
       </div>
       <div className="recipe-edit__details-grid">
         <label htmlFor="name" className="recipe-edit__label">
@@ -84,7 +99,9 @@ const RecipeEdit = ({recipe}) => {
         ))}
       </div>
       <div className="recipe-edit__add-ingredient-btn-container">
-        <button className="btn btn--primary">Add Ingredient</button>
+        <button className="btn btn--primary" onClick={()=>handleIngredientAdd()}>
+          Add Ingredient
+        </button>
       </div>
     </div>
   );
