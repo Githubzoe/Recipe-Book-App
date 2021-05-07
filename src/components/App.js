@@ -54,6 +54,9 @@ function App() {
   }
 
   function handleRecipeDelete(id) {
+    if (seletedRecipeId != null && seletedRecipeId == id){
+      setSeletedRecipeId(undefined)
+    }
     setRecipes(recipes.filter((recipe) => recipe.id !== id));
   }
 
